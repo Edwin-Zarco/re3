@@ -23,12 +23,12 @@ jobs:
     - uses: actions/checkout@v7
       with:
         submodules: 'true'
-    - if: ${{ matrix.platform == 'win-x86-librw_gl3_glfw-mss' }}
+    - if: ${{ matrix.platform }} == 'win-x86-librw_gl3_glfw-mss'
       name: Download glfw
       uses: carlosperate/download-file-action@v2
       with:
         file-url: ${{env.GLFW_URL}}
-    - if: ${{ matrix.platform == 'win-x86-librw_gl3_glfw-mss' }}
+    - if: ${{ matrix.platform }} == 'win-x86-librw_gl3_glfw-mss'
       name: Unpack archives
       run: |
           7z x ${{env.GLFW_FILE}}
