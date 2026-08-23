@@ -77,7 +77,7 @@ workspace "reLCS"
 	staticruntime "off"
 
 	-- for CVECTORHACK
-	configuration { "gmake*" }
+	filter { "action:gmake*" }
 		buildoptions { "-fpermissive" }
 
 	filter { "platforms:macosx*" }
@@ -130,7 +130,7 @@ workspace "reLCS"
 		defines { "NDEBUG" }
 		optimize "Speed"
 		if(_OPTIONS["with-lto"]) then
-			flags { "LinkTimeOptimization" }
+			linktimeoptimization "On"
 		end
 
 	filter { "platforms:win*" }
@@ -195,7 +195,7 @@ workspace "reLCS"
           if (exepath) then
 			 -- Used VS variable $(TargetFileName) because it doesn't accept premake tokens. Does debugcommand even work outside VS??
              debugcommand (gamepath .. "$(TargetFileName)")
-             dir, file = exepath:match'(.*/)(.*)'
+             local dir, file = exepath:match'(.*/)(.*)'
              debugdir (gamepath .. (dir or ""))
           end
        end
