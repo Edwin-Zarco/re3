@@ -118,7 +118,10 @@ jobs:
       - name: "Create binary package (cpack)"
         working-directory: ./build
         run: |
-          cpack -C RelWithDebInfo
+          cpack -G ZIP -C RelWithDebInfo
+          echo "---- build/ contents after cpack ----"
+          ls -la .
+          find . -maxdepth 2 -iname "*.zip" -o -iname "*.tar.gz" -o -iname "*.tgz"
       - name: "Archive binary package (github artifacts)"
         uses: actions/upload-artifact@v7
         with:
