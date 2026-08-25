@@ -19,8 +19,8 @@ jobs:
         buildtype: [Debug, Release]
     steps:
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v2
-    - uses: actions/checkout@v4
+      uses: microsoft/setup-msbuild@v3
+    - uses: actions/checkout@v7
       with:
         submodules: 'true'
     - if: ${{ matrix.platform }} == "win-amd64-librw_gl3_glfw-mss"
@@ -34,7 +34,7 @@ jobs:
           7z x ${{env.GLFW_FILE}}
     - name: Configure build
       run: |
-        ./premake5 vs2019 --with-librw --no-full-paths --glfwdir64=${{env.GLFW_BASE}}
+        ./premake5 vs2022 --with-librw --no-full-paths --glfwdir64=${{env.GLFW_BASE}}
     - name: Build
       run: |
         msbuild -m build/reLCS.sln /property:Configuration=${{matrix.buildtype}} /property:Platform=${{matrix.platform}}
@@ -50,7 +50,7 @@ jobs:
         mv ./vendor/mpg123/dist/Win64/libmpg123-0.dll ./gamefiles/
         mv ./vendor/openal-soft/dist/Win64/OpenAL32.dll ./gamefiles/
     - name: Upload artifact to actions
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: reLCS_${{matrix.buildtype}}_${{matrix.platform}}
         path: ./gamefiles/*
