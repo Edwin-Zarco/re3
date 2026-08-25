@@ -86,6 +86,10 @@ jobs:
             cp ~/.conan2/profiles/default host_profile
           fi
       - name: "Export Playstation 2 CMake toolchain conan recipe"
+        # This recipe is still Conan-1-only (`from conans import ConanFile`)
+        # and hasn't been migrated - gated out until either it's migrated or
+        # `ps2` is actually enabled in the matrix above.
+        if: ${{ matrix.platform == 'ps2' }}
         run: |
           conan export vendor/librw/cmake/ps2/cmaketoolchain --name=ps2dev-cmaketoolchain --version=master
       - name: "Export librw conan recipe"
