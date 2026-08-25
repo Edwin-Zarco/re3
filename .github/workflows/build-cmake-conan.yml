@@ -54,14 +54,13 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.x'
-      # NOTE: verify which Xcode versions conan-center-index currently ships binaries for
-      # (`xcodebuild -showsdks` / conan-center-index compiler.version support) and adjust
-      # this pin if newer Xcode has since been added. Left explicit rather than dropped so
-      # macos-latest bumping its default Xcode doesn't silently change your build inputs.
-      - name: "Pin Xcode version"
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          sudo xcode-select --switch /Applications/Xcode_16.app
+      # macos-latest now points at the macOS 26 (Tahoe) image, which only ships
+      # Xcode 26.x builds (Xcode 16 is no longer present at all) - the old pin
+      # to work around missing conan-center-index binaries for a brand-new
+      # Xcode doesn't apply anymore. Using whatever the image defaults to.
+      # If conan-center-index ever falls behind the image's default Xcode
+      # again, list installed versions with `ls /Applications | grep Xcode`
+      # in a debug step and pin explicitly with xcode-select.
       - name: "Setup conan"
         run: |
           python -m pip install --upgrade pip
