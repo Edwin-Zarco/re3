@@ -23,7 +23,7 @@ jobs:
     - name: Configure build
       run: |
         chmod +x ./premake5Linux
-        ./premake5Linux --with-librw gmake2
+        ./premake5Linux --with-librw --no-git-hash gmake2
     - name: Build
       run: |
         make -C build -j$(nproc) config=$(echo ${{matrix.buildtype}} | tr '[:upper:]' '[:lower:]')_${{matrix.platform}}
