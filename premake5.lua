@@ -242,7 +242,7 @@ project "librw"
 		staticruntime "off"
 
 	filter "platforms:*RW34*"
-		flags { "ExcludeFromBuild" }
+		excludefrombuild "On"
 	filter  {}
 end
 
