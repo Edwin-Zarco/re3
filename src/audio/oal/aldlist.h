@@ -44,7 +44,7 @@ struct ALDEVICEINFO {
 	{
 		if(strDeviceName) delete[] strDeviceName;
 		strDeviceName = new char[strlen(name) + 1];
-		strcpy(strDeviceName, name);
+		strcpy_s(strDeviceName, strlen(name) + 1, name);
 	}
 };
 
