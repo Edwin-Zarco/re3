@@ -1950,7 +1950,7 @@ bool CGarage::DoesCraigNeedThisCar(int32 mi)
 {
 	uint32 total;
 	int ct = CGarages::GetCarsCollectedIndexForGarageType(m_eGarageType, total);
-	for (int i = 0; i < total; i++) {
+	for (uint32 i = 0; i < total; i++) {
 		if (mi == gaCarsToCollectInCraigsGarages[ct][i] || (gaCarsToCollectInCraigsGarages[ct][i] == MI_CHEETAH && mi == MI_VICECHEE))
 			return (CGarages::CarTypesCollected[ct] & BIT(i)) == 0;
 	}
@@ -1961,7 +1961,7 @@ bool CGarage::HasCraigCollectedThisCar(int32 mi)
 {
 	uint32 total;
 	int ct = CGarages::GetCarsCollectedIndexForGarageType(m_eGarageType, total);
-	for (int i = 0; i < total; i++) {
+	for (uint32 i = 0; i < total; i++) {
 		if (mi == gaCarsToCollectInCraigsGarages[ct][i])
 			return CGarages::CarTypesCollected[ct] & BIT(i);
 	}
@@ -1972,7 +1972,7 @@ bool CGarage::MarkThisCarAsCollectedForCraig(int32 mi)
 {
 	uint32 total;
 	int ct = CGarages::GetCarsCollectedIndexForGarageType(m_eGarageType, total);
-	int index;
+	uint32 index;
 	for (index = 0; index < total; index++) {
 		if (mi == gaCarsToCollectInCraigsGarages[ct][index])
 			break;
@@ -1980,7 +1980,7 @@ bool CGarage::MarkThisCarAsCollectedForCraig(int32 mi)
 	if (index >= total)
 		return false;
 	CGarages::CarTypesCollected[ct] |= BIT(index);
-	for (int i = 0; i < total; i++) {
+	for (uint32 i = 0; i < total; i++) {
 		if ((CGarages::CarTypesCollected[ct] & BIT(i)) == 0) {
 			return false;
 		}
