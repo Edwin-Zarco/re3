@@ -363,7 +363,7 @@ public:
 		if (m_FormatHeader.AudioFormat == WAVEFMT_PCM)
 		{
 			// just read the file and sort the samples
-			uint32 size = fread(buffer, 1, GetBufferSize(), m_pFile);
+			uint32 size = (uint32)fread(buffer, 1, GetBufferSize(), m_pFile);
 			if (m_FormatHeader.NumChannels == 2)
 				SortStereoBuffer.SortStereo(buffer, size);
 			return size;
@@ -836,7 +836,7 @@ public:
 	uint32 GetSampleCount()
 	{
 		if (!IsOpened()) return 0;
-		return m_nNumberOfBlocks * NUM_VAG_LINES_IN_BLOCK * VAG_SAMPLES_IN_LINE;
+		return (uint32)(m_nNumberOfBlocks * NUM_VAG_LINES_IN_BLOCK * VAG_SAMPLES_IN_LINE);
 	}
 
 	uint32 GetSampleRate()
@@ -881,7 +881,7 @@ public:
 	uint32 Tell()
 	{
 		if (!IsOpened()) return 0;
-		uint32 pos = (m_CurrentBlock * NUM_VAG_LINES_IN_BLOCK + m_LineInBlock) * VAG_SAMPLES_IN_LINE;
+		uint32 pos = (uint32)((m_CurrentBlock * NUM_VAG_LINES_IN_BLOCK + m_LineInBlock) * VAG_SAMPLES_IN_LINE);
 		return samples2ms(pos);
 	}
 
@@ -893,11 +893,11 @@ public:
 
 		// cache current ADPCM block
 		if (!m_bBlockRead)
-			ReadBlock(m_CurrentBlock);
+			ReadBlock((int32)m_CurrentBlock);
 
 		// trim the buffer size if we're at the end of our file
 		int numberOfRequiredLines = GetBufferSamples() / m_nChannels / VAG_SAMPLES_IN_LINE;
-		int numberOfRemainingLines = (m_nNumberOfBlocks - m_CurrentBlock) * NUM_VAG_LINES_IN_BLOCK - m_LineInBlock;
+		int numberOfRemainingLines = (int)((m_nNumberOfBlocks - m_CurrentBlock) * NUM_VAG_LINES_IN_BLOCK - m_LineInBlock);
 		int bufSizePerChannel = Min(numberOfRequiredLines, numberOfRemainingLines) * VAG_SAMPLES_IN_LINE * GetSampleSize();
 
 		// calculate the pointers to individual channel buffers
